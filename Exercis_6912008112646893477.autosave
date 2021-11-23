@@ -1,0 +1,55 @@
+PVector cameraPos;//中间的蓝色东西
+PVector targetPos;
+int targetSize;
+
+void setup() {
+  size(640, 480, P3D);
+  cameraPos = new PVector(width, 0, 100);
+  setTarget();
+  setupCapture();
+  setupOpenCV();
+}
+
+void draw() {
+  scale(2);
+  background(0);
+  updateOpenCV();
+  fill(#C14444);
+  noStroke();
+  rect(targetPos.x,targetPos.y,targetSize,targetSize);
+  image(pg, 0, 0);
+  setFace();
+}
+
+void setFace(){
+  noFill();
+  stroke(0, 255, 0);
+  strokeWeight(3);
+    
+  for (int i = 0; i < faces.length; i++) {
+    Rectangle face = faces[i];
+    if (i == 0) {
+      cameraPos.x = face.x - width / 2;   
+    }
+    rect(face.x, face.y, face.width, face.height);
+  }
+    
+  pushMatrix();
+  fill(0, 127, 255);
+  stroke(0);
+  strokeWeight(1);    
+  camera(cameraPos.x, cameraPos.y, cameraPos.z, 0, 0, 0, 0, -1, 0);
+  popMatrix();
+}
+
+void triggle(){
+
+}
+
+void setTarget() {
+  targetSize=int (random(10,30));
+  targetPos = new PVector(int(random(160, 480)),int(random(120, 360)));
+  fill(#C14444);
+  noStroke();
+  rect(targetPos.x,targetPos.y,targetSize,targetSize);
+}
